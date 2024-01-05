@@ -1,5 +1,52 @@
 
 
+let playerScore = 0
+let computerScore = 0
+let choice = ""
+let btnRock = document.querySelector('.rock')
+
+let resultText = document.querySelector('.result')
+
+let scoreText = document.querySelector('.score')
+
+btnRock.addEventListener('click', function() {
+    if( playerScore+computerScore <5){
+        choice = "Rock"
+        resultText.textContent = game(choice)
+        scoreText.textContent = `Player ${playerScore} | Computer ${computerScore}.`
+        if( playerScore+computerScore == 5){
+        resultText.textContent = 'Game ended'
+        }
+    }
+});
+
+let btnPaper = document.querySelector('.paper')
+btnPaper.addEventListener('click', function() {
+    if( playerScore+computerScore <5){
+        choice = "Paper"
+        resultText.textContent = game(choice)
+        scoreText.textContent = `Player ${playerScore} | Computer ${computerScore}.`
+        if( playerScore+computerScore == 5){
+        resultText.textContent = 'Game ended'
+        }
+    }
+});
+
+let btnScissors = document.querySelector('.scissors')
+btnScissors.addEventListener('click', function() {
+    if( playerScore+computerScore <5){
+        choice = "Scissors"
+        resultText.textContent = game(choice)
+        scoreText.textContent = `Player ${playerScore} | Computer ${computerScore}.`
+        if( playerScore+computerScore == 5){
+        resultText.textContent = 'Game ended'
+        }
+    }
+});
+       
+        
+
+
 function getComputerChoice() {
     let choice = Math.floor(Math.random()*3);
     if (choice == 0){
@@ -10,24 +57,6 @@ function getComputerChoice() {
     } 
     else{
         return "Scissors"
-    }
-}
-
-function getPlayerChoice() {
-    while (true){
-        let choice = prompt('Chose rock paper or scissors').toLowerCase()
-        if (choice == "rock"){
-            return "Rock"
-        } 
-        else if (choice == "paper"){
-            return "Paper"
-        } 
-        else if (choice == "scissors"){
-            return "Scissors"
-        }
-        else{
-            console.log("Invalid input, please try again.")
-        }
     }
 }
 
@@ -46,32 +75,26 @@ function playRound(playerSelection,computerSelection){
     }
 }
 
-function game(){
-    let playerScore = 0
-    let computerScore = 0
-    while(playerScore+computerScore < 5){
-        let result = playRound(getPlayerChoice(),getComputerChoice()).trim().split(' ')
-        if(result[0] == "Computer"){
-            computerScore++;
-        }
-        else if(result[0] == "Player"){
-            playerScore++;
-        }
-        else{
-            playerScore = playerScore + 0.5
-            computerScore = computerScore + 0.5
-        }
+function game(playerChoice){
+
+    let result = playRound(playerChoice,getComputerChoice()).trim().split(' ')
+    if(result[0] == "Computer"){
+        computerScore++;
+        console.log(`Score:\n Player ${playerScore} | Computer ${computerScore}.`);
+        return 'player'
     }
-    if (computerScore <playerScore){
-        return "Player won the game!"
-    }
-    else if (playerScore <computerScore){
-        return "Computer won the game!"
+    else if(result[0] == "Player"){
+        playerScore++;
+        console.log(`Score:\n Computer ${computerScore} | Player ${playerScore}.`);
+        return 'computer'
     }
     else{
-        return "Draw!";
+        playerScore = playerScore + 0.5
+        computerScore = computerScore + 0.5
+        console.log(`Score:\n Player ${playerScore} | Computer ${computerScore}.`);
+        return 'draw'
+        
     }
 }
 //comentario
 
-console.log(game())
